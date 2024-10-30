@@ -1,2 +1,9 @@
 # go-algorithms
-solved algorithms in go
+
+popular algorithms solved using go language
+
+## How to run algorithms tests
+
+```go
+go test -v
+```
