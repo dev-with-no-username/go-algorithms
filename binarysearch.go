@@ -15,5 +15,8 @@ func binarySearch(sortedArray []int, valueToSearch int, leftIndex int, rightInde
 	} else {
 		return false
 	}
+	// Condition base that I set to true to not cause unwanted behaviour
+	// in case of this will be returned before the actual "return"
+	// encountered by the above "if" statement of the algorithm
 	return true
 }

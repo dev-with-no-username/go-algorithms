@@ -16,6 +16,10 @@ func TestAlgorithms(t *testing.T) {
 	t.Run("bubbleSortAndBinarySearch", bubbleSortAndBinarySearch)
 	t.Run("bubbleSortAndLinearSearch", bubbleSortAndLinearSearch)
 	t.Run("fibonacciTest", fibonacciTest)
+	t.Run("insertionSortAndBinarySearch", insertionSortAndBinarySearch)
+	t.Run("insertionSortAndLinearSearch", insertionSortAndLinearSearch)
+	t.Run("selectionSortAndBinarySearch", selectionSortAndBinarySearch)
+	t.Run("selectionSortAndLinearSearch", selectionSortAndLinearSearch)
 }
 
 func createArrayForTest(numElements int) []int {
@@ -23,8 +27,14 @@ func createArrayForTest(numElements int) []int {
 
 	randomSlice := make([]int, numElements)
 	for i := 0; i < numElements; i++ {
-		randomNum := rand.Intn(numElements)
-		randomSlice = append(randomSlice, randomNum)
+		var randomNum int
+		for {
+			randomNum = rand.Intn(numElements)
+			if randomNum != 0 {
+				randomSlice = append(randomSlice, randomNum)
+				break
+			}
+		}
 	}
 
 	return randomSlice
@@ -212,4 +222,110 @@ func fibonacciTest(t *testing.T) {
 	t.Log(fibonacciResult, fibonacciSimpleRes)
 	fibonacciEnd := time.Now()
 	t.Log("Ending fibonacci, with duration:", fibonacciEnd.Sub(fibonacciStart))
+}
+
+func insertionSortAndBinarySearch(t *testing.T) {
+	arr := createArrayForTest(100000)
+
+	// insertionSort
+	insertionSortStart := time.Now()
+	t.Log("Starting insertionSort")
+	insertionSort(arr, 0, 1)
+	insertionSortEnd := time.Now()
+	t.Log("Ending insertionSort, with duration:", insertionSortEnd.Sub(insertionSortStart))
+	arrForCheck := make([]int, len(arr))
+	copy(arrForCheck, arr)
+
+	// binarySearch
+	binarySearchStart := time.Now()
+	value := generateRandomIntForSearch(arr)
+	t.Log("Starting binarySearch for", value)
+	found := binarySearch(arr, value, 0, len(arr)-1)
+	if !found {
+		t.Fatal("Value", value, "not found")
+	}
+	binarySearchEnd := time.Now()
+	t.Log("Ending binarySearch, with duration", binarySearchEnd.Sub(binarySearchStart))
+
+	assert.Equal(t, arr, arrForCheck)
+}
+
+func insertionSortAndLinearSearch(t *testing.T) {
+	arr := createArrayForTest(100000)
+
+	// insertionSort
+	insertionSortStart := time.Now()
+	t.Log("Starting insertionSort")
+	insertionSort(arr, 0, 1)
+	insertionSortEnd := time.Now()
+	t.Log("Ending insertionSort, with duration:", insertionSortEnd.Sub(insertionSortStart))
+	arrForCheck := make([]int, len(arr))
+	copy(arrForCheck, arr)
+
+	// linearsearch
+	linearSearchStart := time.Now()
+	value := generateRandomIntForSearch(arr)
+	t.Log("Starting linearsearch for", value)
+	found := linearSearch(arr, value)
+	if !found {
+		t.Fatal("Value", value, "not found")
+	}
+	linearSearchEnd := time.Now()
+	t.Log("Ending linearsearch, with duration", linearSearchEnd.Sub(linearSearchStart))
+
+	assert.Equal(t, arr, arrForCheck)
+}
+
+func selectionSortAndBinarySearch(t *testing.T) {
+	arr := createArrayForTest(100000)
+
+	// selectionSort
+	selectionSortStart := time.Now()
+	t.Log("Starting selectionSort")
+	selectionSort(arr)
+	selectionSortEnd := time.Now()
+	t.Log("Ending selectionSort, with duration:", selectionSortEnd.Sub(selectionSortStart))
+
+	arrForCheck := make([]int, len(arr))
+	copy(arrForCheck, arr)
+
+	// binarySearch
+	binarySearchStart := time.Now()
+	value := generateRandomIntForSearch(arr)
+	t.Log("Starting binarySearch for", value)
+	found := binarySearch(arr, value, 0, len(arr)-1)
+	if !found {
+		t.Fatal("Value", value, "not found")
+	}
+	binarySearchEnd := time.Now()
+	t.Log("Ending binarySearch, with duration", binarySearchEnd.Sub(binarySearchStart))
+
+	assert.Equal(t, arr, arrForCheck)
+}
+
+func selectionSortAndLinearSearch(t *testing.T) {
+	arr := createArrayForTest(100000)
+
+	// selectionSort
+	selectionSortStart := time.Now()
+	t.Log("Starting selectionSort")
+	selectionSort(arr)
+	selectionSortEnd := time.Now()
+	t.Log("Ending selectionSort, with duration:", selectionSortEnd.Sub(selectionSortStart))
+
+	arrForCheck := make([]int, len(arr))
+	copy(arrForCheck, arr)
+
+	// linearsearch
+	linearSearchStart := time.Now()
+	value := generateRandomIntForSearch(arr)
+	t.Log("Starting linearsearch for", value)
+	found := linearSearch(arr, value)
+	if !found {
+		t.Fatal("Value", value, "not found")
+	}
+	linearSearchEnd := time.Now()
+	t.Log("Ending linearsearch, with duration", linearSearchEnd.Sub(linearSearchStart))
+
+	assert.Equal(t, arr, arrForCheck)
 }
